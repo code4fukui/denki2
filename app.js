@@ -2,7 +2,9 @@ const OPTION_LABELS = ["イ", "ロ", "ハ", "ニ"];
 const EXAM_MINUTES = 120;
 
 const state = {
+  allQuestions: [],
   questions: [],
+  mode: "all",
   current: 0,
   answers: {},
   remaining: EXAM_MINUTES * 60,
@@ -22,22 +24,26 @@ function showScreen(screen) {
 }
 
 async function loadQuestions() {
+  if (state.allQuestions.length) return;
   const response = await fetch("output/questions.json");
   if (!response.ok) throw new Error("問題データを読み込めませんでした");
-  state.questions = await response.json();
+  state.allQuestions = await response.json();
 }
 
 function renderQuestion() {
   const question = state.questions[state.current];
   const number = question.number;
-  $("#progress-text").textContent = `問題 ${number} / ${state.questions.length}`;
+  const position = state.current + 1;
+  $("#progress-text").textContent = `問題 ${position} / ${state.questions.length}`;
   $("#answered-text").textContent = `回答済み ${Object.keys(state.answers).length}問`;
   $("#nav-count").textContent = `${Object.keys(state.answers).length} / ${state.questions.length}`;
-  $("#progress-bar").style.width = `${(number / state.questions.length) * 100}%`;
+  $("#progress-bar").style.width = `${(position / state.questions.length) * 100}%`;
   $("#section-label").textContent = number <= 30 ? `問題${number}・一般問題` : `問題${number}・配線図`;
   // questions.json lives in output/, so resolve its image path from the site root.
-  $("#question-image").src = `output/${question.image}`;
-  $("#question-image").alt = `第二種電気工事士 問題${number}`;
+  $("#question-image").src = `output/${question.question_image}`;
+  $("#question-image").alt = `第二種電気工事士 問題${number}の問題文`;
+  $("#answer-image").src = `output/${question.answer_image}`;
+  $("#answer-image").alt = `第二種電気工事士 問題${number}の選択肢`;
   $("#prev-button").disabled = state.current === 0;
   $("#next-button").innerHTML = state.current === state.questions.length - 1 ? "解答を提出する <span>✓</span>" : "次の問題 <span>→</span>";
 
@@ -53,7 +59,11 @@ function renderQuestion() {
     if (state.answers[number] === label) button.classList.add("selected");
     button.addEventListener("click", () => {
       state.answers[number] = label;
-      renderQuestion();
+      if (state.current === state.questions.length - 1) submitExam();
+      else {
+        state.current += 1;
+        renderQuestion();
+      }
     });
     options.appendChild(button);
   });
@@ -124,6 +134,11 @@ async function startExam() {
   $("#start-button").disabled = true;
   try {
     await loadQuestions();
+    state.questions = state.mode === "general"
+      ? state.allQuestions.filter((question) => question.number <= 30)
+      : state.mode === "wiring"
+        ? state.allQuestions.filter((question) => question.number >= 31)
+        : [...state.allQuestions];
     state.current = 0;
     state.answers = {};
     state.remaining = EXAM_MINUTES * 60;
@@ -138,6 +153,13 @@ async function startExam() {
   }
 }
 
+document.querySelectorAll(".mode-button").forEach((button) => {
+  button.addEventListener("click", () => {
+    state.mode = button.dataset.mode;
+    document.querySelectorAll(".mode-button").forEach((item) => item.classList.remove("selected"));
+    button.classList.add("selected");
+  });
+});
 $("#start-button").addEventListener("click", startExam);
 $("#prev-button").addEventListener("click", () => { if (state.current > 0) { state.current -= 1; renderQuestion(); } });
 $("#next-button").addEventListener("click", () => { if (state.current === state.questions.length - 1) submitExam(); else { state.current += 1; renderQuestion(); } });

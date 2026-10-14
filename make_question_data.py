@@ -54,10 +54,26 @@ for page_no, first_question, lines in tables:
             "convert", str(src), "-crop", f"{width}x{height}+{x}+{top + 2}",
             "+repage", str(dst)
         ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        # Split each table row into the question column and the answer column.
+        # The general questions and questions 31-40 use a wider question column;
+        # the photo-choice pages 41-50 use a narrower one.
+        split_x = 495 if qno <= 40 else 318
+        question_image = images_dir / f"q{qno:03d}-question.png"
+        answer_image = images_dir / f"q{qno:03d}-answer.png"
+        subprocess.run([
+            "convert", str(dst), "-crop", f"{split_x}x{height}+0+0",
+            "+repage", str(question_image)
+        ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.run([
+            "convert", str(dst), "-crop", f"{width - split_x}x{height}+{split_x}+0",
+            "+repage", str(answer_image)
+        ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         records.append({
             "number": qno,
             "answer": answers[qno],
             "image": f"questions/{filename}",
+            "question_image": f"questions/{question_image.name}",
+            "answer_image": f"questions/{answer_image.name}",
             "source_page": page_no,
         })
 

@@ -37,6 +37,12 @@
           <span class="note-icon">i</span>
           <p>問題画像を見ながら、イ・ロ・ハ・ニから1つ選んでください。途中で戻ることもできます。</p>
         </div>
+        <p class="mode-label">チャレンジ範囲を選択</p>
+        <div class="exam-modes">
+          <button class="mode-button selected" data-mode="all"><strong>全50問</strong><span>本番形式で挑戦</span></button>
+          <button class="mode-button" data-mode="general"><strong>前半30問</strong><span>一般問題</span></button>
+          <button class="mode-button" data-mode="wiring"><strong>後半20問</strong><span>配線図問題</span></button>
+        </div>
         <button id="start-button" class="primary-button">試験をはじめる <span>→</span></button>
       </div>
       <div class="source-note">
@@ -64,7 +70,10 @@
 
         <section class="question-card">
           <div class="question-meta"><span id="section-label">問題1・一般問題</span><span id="point-label">2点</span></div>
-          <div class="question-image-frame"><img id="question-image" alt="試験問題" /></div>
+          <div class="question-image-frame">
+            <div class="problem-panel"><span>問題文</span><img id="question-image" alt="試験問題の問題文" /></div>
+            <div class="problem-panel"><span>選択肢</span><img id="answer-image" alt="試験問題の選択肢" /></div>
+          </div>
           <div class="answer-area">
             <p class="answer-label">あなたの答え</p>
             <div id="answer-options" class="answer-options" role="radiogroup" aria-label="解答選択肢"></div>
