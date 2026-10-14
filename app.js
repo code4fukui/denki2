@@ -25,7 +25,7 @@ const startScreen = $("#start-screen");
 const figScreen = $("#fig-screen");
 const examScreen = $("#exam-screen");
 const resultScreen = $("#result-screen");
-const figState = { cards: [], current: 0, revealed: false };
+const figState = { cards: [], current: 0, revealed: false, frontLabel: "カード", backLabel: "答え" };
 
 function showScreen(screen) {
   [startScreen, figScreen, examScreen, resultScreen].forEach((item) => item.classList.add("hidden"));
@@ -53,10 +53,14 @@ async function loadCatalog() {
 
 async function loadFigures() {
   if (figState.cards.length) return;
-  const response = await fetch("fig.csv");
-  if (!response.ok) throw new Error("図記号データを読み込めませんでした");
+  const response = await fetch("card.csv");
+  if (!response.ok) throw new Error("暗記カードデータを読み込めませんでした");
   const text = await response.text();
-  figState.cards = text.split(/\r?\n/).slice(1).map((line) => {
+  const lines = text.split(/\r?\n/);
+  const headers = lines.shift().split(",").map((value) => value.trim());
+  figState.frontLabel = headers[0] || "カード";
+  figState.backLabel = headers[1] || "答え";
+  figState.cards = lines.map((line) => {
     const comma = line.indexOf(",");
     if (comma < 0) return null;
     return { symbol: line.slice(0, comma).trim(), meaning: line.slice(comma + 1).trim().replace(/,$/, "") };
@@ -67,11 +71,14 @@ function renderFigureCard() {
   const card = figState.cards[figState.current];
   if (!card) return;
   $("#fig-progress").textContent = `${figState.current + 1} / ${figState.cards.length}`;
+  $("#fig-card-label").textContent = figState.frontLabel;
   $("#fig-symbol").textContent = card.symbol;
-  $("#fig-meaning").textContent = figState.revealed ? card.meaning : "タップして意味を表示";
+  $("#fig-meaning").textContent = figState.revealed
+    ? `${figState.backLabel}: ${card.meaning}`
+    : `タップして${figState.backLabel}を表示`;
   $("#fig-meaning").classList.toggle("visible", figState.revealed);
   $("#fig-card").setAttribute("aria-expanded", figState.revealed ? "true" : "false");
-  $("#fig-reveal-button").textContent = figState.revealed ? "意味を隠す" : "意味を見る";
+  $("#fig-reveal-button").textContent = figState.revealed ? `${figState.backLabel}を隠す` : `${figState.backLabel}を見る`;
   $("#fig-prev-button").disabled = figState.current === 0;
   $("#fig-next-button").disabled = figState.current === figState.cards.length - 1;
 }
