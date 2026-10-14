@@ -70,6 +70,7 @@ function renderQuestion() {
   $("#nav-count").textContent = `${Object.keys(state.answers).length} / ${state.questions.length}`;
   $("#progress-bar").style.width = `${(position / state.questions.length) * 100}%`;
   $("#section-label").textContent = number <= 30 ? `問題${number}・一般問題` : `問題${number}・配線図`;
+  $(".question-card").classList.toggle("wrong-state", Boolean(state.mistakes[number] && state.answers[number] !== question.answer));
   // questions.json lives in output/, so resolve its image path from the site root.
   $("#question-image").src = `output/${question.question_image}`;
   $("#question-image").alt = `第二種電気工事士 問題${number}の問題文`;
@@ -82,7 +83,7 @@ function renderQuestion() {
   options.innerHTML = "";
   const feedback = $("#answer-feedback");
   feedback.textContent = state.mistakes[number] && state.answers[number] !== question.answer
-    ? "不正解です。正解を選ぶまで次の問題には進めません。"
+    ? "不正解です。問題文を確認して、正解を選ぶまで次の問題には進めません。"
     : "";
   feedback.className = feedback.textContent ? "answer-feedback visible" : "answer-feedback";
   OPTION_LABELS.forEach((label) => {
@@ -99,6 +100,7 @@ function renderQuestion() {
       if (label !== question.answer) {
         state.mistakes[number] = true;
         renderQuestion();
+        $("#question-image").scrollIntoView({ behavior: "smooth", block: "start" });
         return;
       }
       if (state.current === state.questions.length - 1) submitExam();
@@ -145,27 +147,32 @@ function submitExam(timeUp = false) {
   if (state.submitted) return;
   state.submitted = true;
   clearInterval(state.timerId);
-  const correct = state.questions.filter((q) => state.answers[q.number] === q.answer).length;
+  const correct = state.questions.filter((q) => !state.mistakes[q.number] && state.answers[q.number] === q.answer).length;
   const unanswered = state.questions.filter((q) => !state.answers[q.number]).length;
+  const mistakeQuestions = state.questions.filter((q) => state.mistakes[q.number]).length;
+  const wrong = state.questions.length - correct - unanswered;
   const score = correct * 2;
   $("#result-title").textContent = score >= 60 ? "合格ライン到達です。" : "ここから伸ばしていきましょう。";
   $("#result-summary").textContent = timeUp ? "制限時間になりました。解答を採点しました。" : "解答を採点しました。間違えた問題を復習してみましょう。";
   $("#score-value").textContent = score;
   $("#correct-count").textContent = `${correct}問`;
-  $("#wrong-count").textContent = `${state.questions.length - correct - unanswered}問`;
+  $("#wrong-count").textContent = `${wrong}問`;
   $("#unanswered-count").textContent = `${unanswered}問`;
-  $("#mistake-count").textContent = `${Object.keys(state.mistakes).length}問`;
+  $("#mistake-count").textContent = `${mistakeQuestions}問`;
   $("#score-ring").style.background = `conic-gradient(var(--blue) ${score * 3.6}deg, #e8edf5 ${score * 3.6}deg)`;
   const list = $("#review-list");
   list.innerHTML = "";
   state.questions.forEach((q, index) => {
     const selected = state.answers[q.number] || "未回答";
-    const isCorrect = selected === q.answer;
+    const hasMistake = Boolean(state.mistakes[q.number]);
+    const isCorrect = !hasMistake && selected === q.answer;
+    const isUnanswered = !state.answers[q.number];
     const item = document.createElement("div");
     item.className = `review-item ${isCorrect ? "correct" : "incorrect"}`;
-    const historyLabel = state.mistakes[q.number] ? "・途中で誤答" : "";
+    const historyLabel = hasMistake ? "誤答" : "正解";
     const explanation = q.explanation ? `<span class="review-explanation">正答の理由：${q.explanation}</span>` : "";
-    item.innerHTML = `<span class="review-q">問${q.number}</span><span class="review-answer">あなたの答え <strong>${selected}</strong> ／ 正答 <strong>${q.answer}</strong>${explanation}</span><span class="review-badge">${isCorrect ? `正解${historyLabel}` : "要復習"}</span>`;
+    const badge = isUnanswered ? "未回答" : historyLabel;
+    item.innerHTML = `<span class="review-q">問${q.number}</span><span class="review-answer">あなたの答え <strong>${selected}</strong> ／ 正答 <strong>${q.answer}</strong>${explanation}</span><span class="review-badge">${badge}</span>`;
     item.addEventListener("click", () => { state.current = index; state.submitted = false; showScreen(examScreen); renderQuestion(); startTimer(); });
     list.appendChild(item);
   });

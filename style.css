@@ -80,6 +80,8 @@ button { font: inherit; cursor: pointer; }
 .nav-legend i { width: 8px; height: 8px; border-radius: 3px; background: var(--mint); }
 .nav-legend .legend-current { background: var(--blue); }
 .question-card { overflow: hidden; background: white; border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); }
+.question-card.wrong-state { border-color: var(--coral); box-shadow: 0 0 0 4px rgba(255,116,93,.10), var(--shadow); }
+.question-card.wrong-state .question-image-frame { background: #fffaf8; }
 .question-meta { display: flex; justify-content: space-between; padding: 19px 24px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px; font-weight: 800; }
 .question-meta span:last-child { color: var(--blue); }
 .question-image-frame { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; padding: 23px; background: #fafbfd; min-height: 250px; }
