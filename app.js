@@ -1,5 +1,6 @@
 const OPTION_LABELS = ["イ", "ロ", "ハ", "ニ"];
 const EXAM_MINUTES = 120;
+const ASSET_VERSION = "20261014-5";
 
 const state = {
   catalog: [],
@@ -76,9 +77,9 @@ function renderQuestion() {
   $("#section-label").textContent = number <= 30 ? `問題${number}・一般問題` : `問題${number}・配線図`;
   $(".question-card").classList.toggle("wrong-state", Boolean(state.mistakes[number] && state.answers[number] !== question.answer));
   // questions.json lives in output/, so resolve its image path from the site root.
-  $("#question-image").src = `${state.assetBase}/${question.question_image}`;
+  $("#question-image").src = `${state.assetBase}/${question.question_image}?v=${ASSET_VERSION}`;
   $("#question-image").alt = `第二種電気工事士 問題${number}の問題文`;
-  $("#answer-image").src = `${state.assetBase}/${question.answer_image}`;
+  $("#answer-image").src = `${state.assetBase}/${question.answer_image}?v=${ASSET_VERSION}`;
   $("#answer-image").alt = `第二種電気工事士 問題${number}の選択肢`;
   $("#prev-button").disabled = state.current === 0;
   $("#next-button").innerHTML = state.current === state.questions.length - 1 ? "解答を提出する <span>✓</span>" : "次の問題 <span>→</span>";
