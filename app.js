@@ -7,6 +7,7 @@ const state = {
   mode: "all",
   current: 0,
   answers: {},
+  mistakes: {},
   remaining: EXAM_MINUTES * 60,
   timerId: null,
   submitted: false
@@ -49,6 +50,11 @@ function renderQuestion() {
 
   const options = $("#answer-options");
   options.innerHTML = "";
+  const feedback = $("#answer-feedback");
+  feedback.textContent = state.mistakes[number] && state.answers[number] !== question.answer
+    ? "不正解です。正解を選ぶまで次の問題には進めません。"
+    : "";
+  feedback.className = feedback.textContent ? "answer-feedback visible" : "answer-feedback";
   OPTION_LABELS.forEach((label) => {
     const button = document.createElement("button");
     button.type = "button";
@@ -57,13 +63,16 @@ function renderQuestion() {
     button.setAttribute("role", "radio");
     button.setAttribute("aria-checked", state.answers[number] === label ? "true" : "false");
     if (state.answers[number] === label) button.classList.add("selected");
+    if (state.mistakes[number] && state.answers[number] === label && label !== question.answer) button.classList.add("wrong-selected");
     button.addEventListener("click", () => {
       state.answers[number] = label;
-      if (state.current === state.questions.length - 1) submitExam();
-      else {
-        state.current += 1;
+      if (label !== question.answer) {
+        state.mistakes[number] = true;
         renderQuestion();
+        return;
       }
+      if (state.current === state.questions.length - 1) submitExam();
+      else { state.current += 1; renderQuestion(); }
     });
     options.appendChild(button);
   });
@@ -115,6 +124,7 @@ function submitExam(timeUp = false) {
   $("#correct-count").textContent = `${correct}問`;
   $("#wrong-count").textContent = `${state.questions.length - correct - unanswered}問`;
   $("#unanswered-count").textContent = `${unanswered}問`;
+  $("#mistake-count").textContent = `${Object.keys(state.mistakes).length}問`;
   $("#score-ring").style.background = `conic-gradient(var(--blue) ${score * 3.6}deg, #e8edf5 ${score * 3.6}deg)`;
   const list = $("#review-list");
   list.innerHTML = "";
@@ -123,7 +133,8 @@ function submitExam(timeUp = false) {
     const isCorrect = selected === q.answer;
     const item = document.createElement("div");
     item.className = `review-item ${isCorrect ? "correct" : "incorrect"}`;
-    item.innerHTML = `<span class="review-q">問${q.number}</span><span class="review-answer">あなたの答え <strong>${selected}</strong> ／ 正答 <strong>${q.answer}</strong></span><span class="review-badge">${isCorrect ? "正解" : "要復習"}</span>`;
+    const historyLabel = state.mistakes[q.number] ? "・途中で誤答" : "";
+    item.innerHTML = `<span class="review-q">問${q.number}</span><span class="review-answer">あなたの答え <strong>${selected}</strong> ／ 正答 <strong>${q.answer}</strong></span><span class="review-badge">${isCorrect ? `正解${historyLabel}` : "要復習"}</span>`;
     item.addEventListener("click", () => { state.current = index; state.submitted = false; showScreen(examScreen); renderQuestion(); startTimer(); });
     list.appendChild(item);
   });
@@ -141,6 +152,7 @@ async function startExam() {
         : [...state.allQuestions];
     state.current = 0;
     state.answers = {};
+    state.mistakes = {};
     state.remaining = EXAM_MINUTES * 60;
     state.submitted = false;
     showScreen(examScreen);

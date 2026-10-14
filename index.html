@@ -77,6 +77,7 @@
           <div class="answer-area">
             <p class="answer-label">あなたの答え</p>
             <div id="answer-options" class="answer-options" role="radiogroup" aria-label="解答選択肢"></div>
+            <p id="answer-feedback" class="answer-feedback" aria-live="polite"></p>
           </div>
           <div class="question-actions">
             <button id="prev-button" class="secondary-button">← 前の問題</button>
@@ -94,7 +95,7 @@
       </div>
       <div class="result-grid">
         <div class="score-card"><span>得点</span><strong id="score-value">0</strong><small>/ 100点</small><div id="score-ring" class="score-ring"><div></div></div></div>
-        <div class="result-stats"><div><span>正解</span><strong id="correct-count">0問</strong></div><div><span>不正解</span><strong id="wrong-count">0問</strong></div><div><span>未回答</span><strong id="unanswered-count">0問</strong></div></div>
+        <div class="result-stats"><div><span>正解</span><strong id="correct-count">0問</strong></div><div><span>不正解</span><strong id="wrong-count">0問</strong></div><div><span>未回答</span><strong id="unanswered-count">0問</strong></div><div><span>途中の誤答</span><strong id="mistake-count">0問</strong></div></div>
       </div>
       <div class="review-heading"><h3>問題ごとの結果</h3><button id="restart-button" class="secondary-button">もう一度受ける</button></div>
       <div id="review-list" class="review-list"></div>
