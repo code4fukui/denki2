@@ -164,7 +164,8 @@ function submitExam(timeUp = false) {
     const item = document.createElement("div");
     item.className = `review-item ${isCorrect ? "correct" : "incorrect"}`;
     const historyLabel = state.mistakes[q.number] ? "・途中で誤答" : "";
-    item.innerHTML = `<span class="review-q">問${q.number}</span><span class="review-answer">あなたの答え <strong>${selected}</strong> ／ 正答 <strong>${q.answer}</strong></span><span class="review-badge">${isCorrect ? `正解${historyLabel}` : "要復習"}</span>`;
+    const explanation = q.explanation ? `<span class="review-explanation">正答の理由：${q.explanation}</span>` : "";
+    item.innerHTML = `<span class="review-q">問${q.number}</span><span class="review-answer">あなたの答え <strong>${selected}</strong> ／ 正答 <strong>${q.answer}</strong>${explanation}</span><span class="review-badge">${isCorrect ? `正解${historyLabel}` : "要復習"}</span>`;
     item.addEventListener("click", () => { state.current = index; state.submitted = false; showScreen(examScreen); renderQuestion(); startTimer(); });
     list.appendChild(item);
   });

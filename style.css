@@ -121,6 +121,7 @@ button { font: inherit; cursor: pointer; }
 .review-q { min-width: 42px; font-weight: 900; }
 .review-answer { flex: 1; color: var(--muted); font-size: 12px; }
 .review-answer strong { color: var(--ink); }
+.review-explanation { display: block; margin-top: 7px; color: #53627a; font-size: 11px; line-height: 1.6; }
 .review-badge { font-size: 11px; font-weight: 800; }
 .correct .review-badge { color: var(--mint-ink); }
 .incorrect .review-badge { color: var(--coral); }
