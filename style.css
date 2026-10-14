@@ -97,6 +97,12 @@ button { font: inherit; cursor: pointer; }
 .answer-option.wrong-selected { border-color: var(--coral); background: #fff0ed; color: #c44b38; }
 .answer-feedback { display: none; margin: 12px 0 0; color: var(--coral); font-size: 12px; font-weight: 800; }
 .answer-feedback.visible { display: block; }
+.hint-button { margin-top: 14px; padding: 7px 12px; border: 1px solid #b8c4ed; border-radius: 999px; background: #f5f7ff; color: var(--blue-deep); font-size: 11px; font-weight: 800; }
+.hint-button:hover { background: #eaf0ff; }
+.explanation-panel { display: none; margin-top: 12px; padding: 13px 15px; border-left: 3px solid var(--blue); border-radius: 8px; background: #f5f7ff; color: #53627a; font-size: 12px; line-height: 1.7; }
+.explanation-panel.visible { display: block; }
+.explanation-panel strong { color: var(--blue-deep); }
+.explanation-panel p { margin: 5px 0 0; }
 .question-actions { display: flex; justify-content: space-between; gap: 12px; padding: 18px 24px 24px; }
 .result-screen { max-width: 960px; margin: 0 auto; }
 .result-header { text-align: center; }

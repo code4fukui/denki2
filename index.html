@@ -16,7 +16,7 @@
     </div>
     <div class="topbar-meta">
       <span class="status-dot"></span>
-      <span>全50問 / 100点</span>
+      <span>全50問 / 正答率</span>
     </div>
   </header>
 
@@ -25,7 +25,7 @@
       <div class="hero-copy">
         <p class="kicker">READY WHEN YOU ARE</p>
         <h2>本番と同じ形式で、<br><em>実力をチェック。</em></h2>
-        <p class="lead"><span id="selected-exam-label">令和8年度上期（2026年5月）</span>の公式問題を使った模擬試験です。50問・100点満点、合格ラインの目安は60点です。</p>
+        <p class="lead"><span id="selected-exam-label">令和8年度上期（2026年5月）</span>の公式問題を使った模擬試験です。正答率60%以上を合格と判定します。</p>
       </div>
       <div class="start-panel">
         <div class="exam-facts">
@@ -80,6 +80,11 @@
             <p class="answer-label">あなたの答え</p>
             <div id="answer-options" class="answer-options" role="radiogroup" aria-label="解答選択肢"></div>
             <p id="answer-feedback" class="answer-feedback" aria-live="polite"></p>
+            <button id="hint-button" class="hint-button" type="button" aria-expanded="false">ヒントを見る</button>
+            <div id="explanation-panel" class="explanation-panel" aria-live="polite">
+              <strong>解説</strong>
+              <p id="explanation-text"></p>
+            </div>
           </div>
           <div class="question-actions">
             <button id="prev-button" class="secondary-button">← 前の問題</button>
@@ -96,7 +101,7 @@
         <p id="result-summary" class="lead"></p>
       </div>
       <div class="result-grid">
-        <div class="score-card"><span>得点</span><strong id="score-value">0</strong><small>/ 100点</small><div id="score-ring" class="score-ring"><div></div></div></div>
+        <div class="score-card"><span>正答率</span><strong id="score-value">0</strong><small>/ 100%</small><div id="score-ring" class="score-ring"><div></div></div></div>
         <div class="result-stats"><div><span>正解</span><strong id="correct-count">0問</strong></div><div><span>不正解</span><strong id="wrong-count">0問</strong></div><div><span>未回答</span><strong id="unanswered-count">0問</strong></div><div><span>途中の誤答</span><strong id="mistake-count">0問</strong></div></div>
       </div>
       <div class="review-heading"><h3>問題ごとの結果</h3><button id="restart-button" class="secondary-button">もう一度受ける</button></div>

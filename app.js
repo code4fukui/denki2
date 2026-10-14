@@ -11,6 +11,7 @@ const state = {
   current: 0,
   answers: {},
   mistakes: {},
+  hints: {},
   remaining: EXAM_MINUTES * 60,
   timerId: null,
   submitted: false
@@ -82,10 +83,22 @@ function renderQuestion() {
   const options = $("#answer-options");
   options.innerHTML = "";
   const feedback = $("#answer-feedback");
-  feedback.textContent = state.mistakes[number] && state.answers[number] !== question.answer
+  const wrongNow = state.mistakes[number] && state.answers[number] !== question.answer;
+  const explanationVisible = Boolean(state.hints[number]);
+  feedback.textContent = wrongNow
     ? "不正解です。問題文を確認して、正解を選ぶまで次の問題には進めません。"
     : "";
   feedback.className = feedback.textContent ? "answer-feedback visible" : "answer-feedback";
+  const hintButton = $("#hint-button");
+  hintButton.textContent = explanationVisible ? "解説を隠す" : "ヒントを見る";
+  hintButton.setAttribute("aria-expanded", explanationVisible ? "true" : "false");
+  const explanationPanel = $("#explanation-panel");
+  explanationPanel.className = explanationVisible ? "explanation-panel visible" : "explanation-panel";
+  $("#explanation-text").textContent = question.explanation || "この問題の解説は準備中です。正答と問題文を確認してください。";
+  hintButton.onclick = () => {
+    state.hints[number] = !explanationVisible;
+    renderQuestion();
+  };
   OPTION_LABELS.forEach((label) => {
     const button = document.createElement("button");
     button.type = "button";
@@ -99,6 +112,7 @@ function renderQuestion() {
       state.answers[number] = label;
       if (label !== question.answer) {
         state.mistakes[number] = true;
+        state.hints[number] = true;
         renderQuestion();
         $("#question-image").scrollIntoView({ behavior: "smooth", block: "start" });
         return;
@@ -151,15 +165,15 @@ function submitExam(timeUp = false) {
   const unanswered = state.questions.filter((q) => !state.answers[q.number]).length;
   const mistakeQuestions = state.questions.filter((q) => state.mistakes[q.number]).length;
   const wrong = state.questions.length - correct - unanswered;
-  const score = correct * 2;
-  $("#result-title").textContent = score >= 60 ? "合格ライン到達です。" : "ここから伸ばしていきましょう。";
+  const accuracy = Math.round((correct / state.questions.length) * 100);
+  $("#result-title").textContent = accuracy >= 60 ? "合格ライン到達です。" : "ここから伸ばしていきましょう。";
   $("#result-summary").textContent = timeUp ? "制限時間になりました。解答を採点しました。" : "解答を採点しました。間違えた問題を復習してみましょう。";
-  $("#score-value").textContent = score;
+  $("#score-value").textContent = accuracy;
   $("#correct-count").textContent = `${correct}問`;
   $("#wrong-count").textContent = `${wrong}問`;
   $("#unanswered-count").textContent = `${unanswered}問`;
   $("#mistake-count").textContent = `${mistakeQuestions}問`;
-  $("#score-ring").style.background = `conic-gradient(var(--blue) ${score * 3.6}deg, #e8edf5 ${score * 3.6}deg)`;
+  $("#score-ring").style.background = `conic-gradient(var(--blue) ${accuracy * 3.6}deg, #e8edf5 ${accuracy * 3.6}deg)`;
   const list = $("#review-list");
   list.innerHTML = "";
   state.questions.forEach((q, index) => {
@@ -192,6 +206,7 @@ async function startExam() {
     state.current = 0;
     state.answers = {};
     state.mistakes = {};
+    state.hints = {};
     state.remaining = EXAM_MINUTES * 60;
     state.submitted = false;
     showScreen(examScreen);
