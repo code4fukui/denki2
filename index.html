@@ -88,6 +88,7 @@
           </div>
           <div class="question-actions">
             <button id="prev-button" class="secondary-button">← 前の問題</button>
+            <button id="return-result-button" class="secondary-button hidden">結果画面へ戻る</button>
             <button id="next-button" class="primary-button">次の問題 <span>→</span></button>
           </div>
         </section>
@@ -101,7 +102,7 @@
         <p id="result-summary" class="lead"></p>
       </div>
       <div class="result-grid">
-        <div class="score-card"><span>正答率</span><strong id="score-value">0</strong><small>/ 100%</small><div id="score-ring" class="score-ring"><div></div></div></div>
+        <div class="score-card"><span>正答率</span><strong id="score-value">0</strong><small>/ 100%</small><em id="score-detail">0 / 0問</em><div id="score-ring" class="score-ring"><div></div></div></div>
         <div class="result-stats"><div><span>正解</span><strong id="correct-count">0問</strong></div><div><span>不正解</span><strong id="wrong-count">0問</strong></div><div><span>未回答</span><strong id="unanswered-count">0問</strong></div><div><span>途中の誤答</span><strong id="mistake-count">0問</strong></div></div>
       </div>
       <div class="review-heading"><h3>問題ごとの結果</h3><button id="restart-button" class="secondary-button">もう一度受ける</button></div>
@@ -109,6 +110,6 @@
     </section>
   </main>
   <footer><span>第二種電気工事士 模擬試験</span><span>Local study tool</span></footer>
-  <script src="app.js"></script>
+  <script src="app.js?v=20261014-3"></script>
 </body>
 </html>

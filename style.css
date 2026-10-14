@@ -114,6 +114,7 @@ button { font: inherit; cursor: pointer; }
 .score-card > span { color: var(--muted); font-size: 12px; font-weight: 800; }
 .score-card strong { display: block; margin-top: 9px; font-size: 60px; letter-spacing: -.08em; }
 .score-card small { color: var(--muted); }
+.score-card em { display: block; margin-top: 5px; color: var(--muted); font-size: 11px; font-style: normal; }
 .score-ring { position: absolute; right: 27px; top: 31px; width: 104px; height: 104px; border-radius: 50%; background: conic-gradient(var(--blue) 0deg, #e8edf5 0deg); display: grid; place-items: center; }
 .score-ring div { width: 80px; height: 80px; border-radius: 50%; background: white; }
 .result-stats { display: grid; grid-template-columns: repeat(4, 1fr); align-items: center; }

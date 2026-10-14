@@ -5,6 +5,7 @@ const state = {
   catalog: [],
   examId: "2026-upper",
   loadedExamId: "",
+  assetBase: "output",
   allQuestions: [],
   questions: [],
   mode: "all",
@@ -12,6 +13,7 @@ const state = {
   answers: {},
   mistakes: {},
   hints: {},
+  reviewingResult: false,
   remaining: EXAM_MINUTES * 60,
   timerId: null,
   submitted: false
@@ -35,6 +37,7 @@ async function loadQuestions() {
   if (!response.ok) throw new Error("問題データを読み込めませんでした");
   state.allQuestions = await response.json();
   state.loadedExamId = state.examId;
+  state.assetBase = selectedExam.data.slice(0, selectedExam.data.lastIndexOf("/"));
 }
 
 async function loadCatalog() {
@@ -73,12 +76,13 @@ function renderQuestion() {
   $("#section-label").textContent = number <= 30 ? `問題${number}・一般問題` : `問題${number}・配線図`;
   $(".question-card").classList.toggle("wrong-state", Boolean(state.mistakes[number] && state.answers[number] !== question.answer));
   // questions.json lives in output/, so resolve its image path from the site root.
-  $("#question-image").src = `output/${question.question_image}`;
+  $("#question-image").src = `${state.assetBase}/${question.question_image}`;
   $("#question-image").alt = `第二種電気工事士 問題${number}の問題文`;
-  $("#answer-image").src = `output/${question.answer_image}`;
+  $("#answer-image").src = `${state.assetBase}/${question.answer_image}`;
   $("#answer-image").alt = `第二種電気工事士 問題${number}の選択肢`;
   $("#prev-button").disabled = state.current === 0;
   $("#next-button").innerHTML = state.current === state.questions.length - 1 ? "解答を提出する <span>✓</span>" : "次の問題 <span>→</span>";
+  $("#return-result-button").classList.toggle("hidden", !state.reviewingResult);
 
   const options = $("#answer-options");
   options.innerHTML = "";
@@ -95,15 +99,12 @@ function renderQuestion() {
   const explanationPanel = $("#explanation-panel");
   explanationPanel.className = explanationVisible ? "explanation-panel visible" : "explanation-panel";
   $("#explanation-text").textContent = question.explanation || "この問題の解説は準備中です。正答と問題文を確認してください。";
-  hintButton.onclick = () => {
-    state.hints[number] = !explanationVisible;
-    renderQuestion();
-  };
   OPTION_LABELS.forEach((label) => {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "answer-option";
     button.textContent = label;
+    button.disabled = state.reviewingResult;
     button.setAttribute("role", "radio");
     button.setAttribute("aria-checked", state.answers[number] === label ? "true" : "false");
     if (state.answers[number] === label) button.classList.add("selected");
@@ -165,10 +166,12 @@ function submitExam(timeUp = false) {
   const unanswered = state.questions.filter((q) => !state.answers[q.number]).length;
   const mistakeQuestions = state.questions.filter((q) => state.mistakes[q.number]).length;
   const wrong = state.questions.length - correct - unanswered;
-  const accuracy = Math.round((correct / state.questions.length) * 100);
+  const totalQuestions = state.questions.length;
+  const accuracy = totalQuestions ? Math.round((correct / totalQuestions) * 100) : 0;
   $("#result-title").textContent = accuracy >= 60 ? "合格ライン到達です。" : "ここから伸ばしていきましょう。";
   $("#result-summary").textContent = timeUp ? "制限時間になりました。解答を採点しました。" : "解答を採点しました。間違えた問題を復習してみましょう。";
   $("#score-value").textContent = accuracy;
+  $("#score-detail").textContent = `${correct} / ${totalQuestions}問`;
   $("#correct-count").textContent = `${correct}問`;
   $("#wrong-count").textContent = `${wrong}問`;
   $("#unanswered-count").textContent = `${unanswered}問`;
@@ -187,7 +190,7 @@ function submitExam(timeUp = false) {
     const explanation = q.explanation ? `<span class="review-explanation">正答の理由：${q.explanation}</span>` : "";
     const badge = isUnanswered ? "未回答" : historyLabel;
     item.innerHTML = `<span class="review-q">問${q.number}</span><span class="review-answer">あなたの答え <strong>${selected}</strong> ／ 正答 <strong>${q.answer}</strong>${explanation}</span><span class="review-badge">${badge}</span>`;
-    item.addEventListener("click", () => { state.current = index; state.submitted = false; showScreen(examScreen); renderQuestion(); startTimer(); });
+    item.addEventListener("click", () => { state.current = index; state.reviewingResult = true; showScreen(examScreen); renderQuestion(); });
     list.appendChild(item);
   });
   showScreen(resultScreen);
@@ -207,6 +210,7 @@ async function startExam() {
     state.answers = {};
     state.mistakes = {};
     state.hints = {};
+    state.reviewingResult = false;
     state.remaining = EXAM_MINUTES * 60;
     state.submitted = false;
     showScreen(examScreen);
@@ -227,7 +231,14 @@ document.querySelectorAll(".mode-button").forEach((button) => {
   });
 });
 $("#start-button").addEventListener("click", startExam);
+$("#hint-button").addEventListener("click", () => {
+  const question = state.questions[state.current];
+  if (!question) return;
+  state.hints[question.number] = !state.hints[question.number];
+  renderQuestion();
+});
 $("#prev-button").addEventListener("click", () => { if (state.current > 0) { state.current -= 1; renderQuestion(); } });
 $("#next-button").addEventListener("click", () => { if (state.current === state.questions.length - 1) submitExam(); else { state.current += 1; renderQuestion(); } });
+$("#return-result-button").addEventListener("click", () => { state.reviewingResult = false; showScreen(resultScreen); });
 $("#restart-button").addEventListener("click", () => { showScreen(startScreen); $(".timer").style.color = "var(--blue-deep)"; });
 loadCatalog().catch((error) => console.warn(error.message));
