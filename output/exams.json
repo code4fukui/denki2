@@ -1,0 +1,17 @@
+[
+  {
+    "id": "2026-upper",
+    "label": "令和8年度上期（2026年5月）",
+    "data": "output/questions.json"
+  },
+  {
+    "id": "2025-upper",
+    "label": "令和7年度上期（2025年5月）",
+    "data": "output/2025-upper/questions.json"
+  },
+  {
+    "id": "2025-lower",
+    "label": "令和7年度下期（2025年10月）",
+    "data": "output/2025-lower/questions.json"
+  }
+]

@@ -2,6 +2,9 @@ const OPTION_LABELS = ["イ", "ロ", "ハ", "ニ"];
 const EXAM_MINUTES = 120;
 
 const state = {
+  catalog: [],
+  examId: "2026-upper",
+  loadedExamId: "",
   allQuestions: [],
   questions: [],
   mode: "all",
@@ -25,10 +28,37 @@ function showScreen(screen) {
 }
 
 async function loadQuestions() {
-  if (state.allQuestions.length) return;
-  const response = await fetch("output/questions.json");
+  if (state.loadedExamId === state.examId && state.allQuestions.length) return;
+  const selectedExam = state.catalog.find((exam) => exam.id === state.examId);
+  const response = await fetch(selectedExam.data);
   if (!response.ok) throw new Error("問題データを読み込めませんでした");
   state.allQuestions = await response.json();
+  state.loadedExamId = state.examId;
+}
+
+async function loadCatalog() {
+  if (state.catalog.length) return;
+  const response = await fetch("output/exams.json");
+  if (!response.ok) throw new Error("試験年度データを読み込めませんでした");
+  state.catalog = await response.json();
+  renderExamChoices();
+}
+
+function renderExamChoices() {
+  const container = $("#exam-sets");
+  container.innerHTML = "";
+  state.catalog.forEach((exam) => {
+    const button = document.createElement("button");
+    button.className = `exam-button ${exam.id === state.examId ? "selected" : ""}`;
+    button.textContent = exam.label;
+    button.addEventListener("click", () => {
+      state.examId = exam.id;
+      const selected = state.catalog.find((item) => item.id === state.examId);
+      $("#selected-exam-label").textContent = selected.label;
+      renderExamChoices();
+    });
+    container.appendChild(button);
+  });
 }
 
 function renderQuestion() {
@@ -144,6 +174,7 @@ function submitExam(timeUp = false) {
 async function startExam() {
   $("#start-button").disabled = true;
   try {
+    await loadCatalog();
     await loadQuestions();
     state.questions = state.mode === "general"
       ? state.allQuestions.filter((question) => question.number <= 30)
@@ -176,3 +207,4 @@ $("#start-button").addEventListener("click", startExam);
 $("#prev-button").addEventListener("click", () => { if (state.current > 0) { state.current -= 1; renderQuestion(); } });
 $("#next-button").addEventListener("click", () => { if (state.current === state.questions.length - 1) submitExam(); else { state.current += 1; renderQuestion(); } });
 $("#restart-button").addEventListener("click", () => { showScreen(startScreen); $(".timer").style.color = "var(--blue-deep)"; });
+loadCatalog().catch((error) => console.warn(error.message));
