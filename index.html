@@ -9,7 +9,7 @@
 </head>
 <body>
   <header class="topbar">
-    <div class="brand-mark" aria-hidden="true">電工<span>2</span></div>
+    <button id="home-button" class="brand-mark" type="button" aria-label="トップページへ戻る">電工<span>2</span></button>
     <div>
       <p class="eyebrow">2026年度 上期・学科</p>
       <h1>第二種電気工事士 模擬試験</h1>
@@ -46,6 +46,7 @@
           <button class="mode-button" data-mode="wiring"><strong>後半20問</strong><span>配線図問題</span></button>
         </div>
         <button id="start-button" class="primary-button">試験をはじめる <span>→</span></button>
+        <button id="fig-button" class="secondary-button fig-start-button">図記号暗記カードを開く <span>▣</span></button>
       </div>
       <div class="source-note">
         <p>出典：一般財団法人 電気技術者試験センター<br>令和8年度上期 第二種電気工事士学科試験</p>
@@ -54,11 +55,35 @@
       </div>
     </section>
 
+    <section id="fig-screen" class="screen fig-screen hidden">
+      <div class="fig-header">
+        <p class="kicker">SYMBOL FLASHCARDS</p>
+        <h2>図記号を覚える。</h2>
+        <p class="lead">カードをタップすると意味が表示され、もう一度タップすると次のカードへ進みます。</p>
+      </div>
+      <div class="fig-toolbar">
+        <span id="fig-progress">1 / 1</span>
+        <button id="fig-shuffle-button" class="secondary-button" type="button">シャッフル</button>
+      </div>
+      <button id="fig-card" class="fig-card" type="button" aria-expanded="false">
+        <span class="fig-card-label">図記号</span>
+        <strong id="fig-symbol">読み込み中</strong>
+        <span id="fig-meaning" class="fig-meaning">タップして意味を表示</span>
+      </button>
+      <div class="fig-actions">
+        <button id="fig-prev-button" class="secondary-button" type="button">← 前へ</button>
+        <button id="fig-reveal-button" class="primary-button" type="button">意味を見る</button>
+        <button id="fig-next-button" class="secondary-button" type="button">次へ →</button>
+      </div>
+      <button id="fig-home-button" class="text-button" type="button">試験選択へ戻る</button>
+    </section>
+
     <section id="exam-screen" class="screen exam-screen hidden">
       <div class="exam-toolbar">
         <div class="progress-wrap">
           <div class="progress-label"><span id="progress-text">問題 1 / 50</span><span id="answered-text">回答済み 0問</span></div>
           <div class="progress-track"><div id="progress-bar" class="progress-bar"></div></div>
+          <a id="diagram-link" class="diagram-link hidden" href="#" target="_blank" rel="noreferrer">後半20問の図面を開く ↗</a>
         </div>
         <div class="timer" aria-live="polite"><span class="timer-icon">◷</span><span id="timer">120:00</span></div>
       </div>
@@ -110,6 +135,6 @@
     </section>
   </main>
   <footer><span>第二種電気工事士 模擬試験</span><span>Local study tool</span></footer>
-  <script src="app.js?v=20261014-3"></script>
+  <script src="app.js?v=20261014-6"></script>
 </body>
 </html>

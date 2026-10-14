@@ -22,11 +22,13 @@ const state = {
 
 const $ = (selector) => document.querySelector(selector);
 const startScreen = $("#start-screen");
+const figScreen = $("#fig-screen");
 const examScreen = $("#exam-screen");
 const resultScreen = $("#result-screen");
+const figState = { cards: [], current: 0, revealed: false };
 
 function showScreen(screen) {
-  [startScreen, examScreen, resultScreen].forEach((item) => item.classList.add("hidden"));
+  [startScreen, figScreen, examScreen, resultScreen].forEach((item) => item.classList.add("hidden"));
   screen.classList.remove("hidden");
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -47,6 +49,43 @@ async function loadCatalog() {
   if (!response.ok) throw new Error("試験年度データを読み込めませんでした");
   state.catalog = await response.json();
   renderExamChoices();
+}
+
+async function loadFigures() {
+  if (figState.cards.length) return;
+  const response = await fetch("fig.csv");
+  if (!response.ok) throw new Error("図記号データを読み込めませんでした");
+  const text = await response.text();
+  figState.cards = text.split(/\r?\n/).slice(1).map((line) => {
+    const comma = line.indexOf(",");
+    if (comma < 0) return null;
+    return { symbol: line.slice(0, comma).trim(), meaning: line.slice(comma + 1).trim().replace(/,$/, "") };
+  }).filter((card) => card && card.symbol && card.meaning);
+}
+
+function renderFigureCard() {
+  const card = figState.cards[figState.current];
+  if (!card) return;
+  $("#fig-progress").textContent = `${figState.current + 1} / ${figState.cards.length}`;
+  $("#fig-symbol").textContent = card.symbol;
+  $("#fig-meaning").textContent = figState.revealed ? card.meaning : "タップして意味を表示";
+  $("#fig-meaning").classList.toggle("visible", figState.revealed);
+  $("#fig-card").setAttribute("aria-expanded", figState.revealed ? "true" : "false");
+  $("#fig-reveal-button").textContent = figState.revealed ? "意味を隠す" : "意味を見る";
+  $("#fig-prev-button").disabled = figState.current === 0;
+  $("#fig-next-button").disabled = figState.current === figState.cards.length - 1;
+}
+
+async function openFigureCards() {
+  try {
+    await loadFigures();
+    figState.current = 0;
+    figState.revealed = false;
+    renderFigureCard();
+    showScreen(figScreen);
+  } catch (error) {
+    alert(`${error.message}\nローカルサーバー経由で開いてください。`);
+  }
 }
 
 function renderExamChoices() {
@@ -75,6 +114,9 @@ function renderQuestion() {
   $("#nav-count").textContent = `${Object.keys(state.answers).length} / ${state.questions.length}`;
   $("#progress-bar").style.width = `${(position / state.questions.length) * 100}%`;
   $("#section-label").textContent = number <= 30 ? `問題${number}・一般問題` : `問題${number}・配線図`;
+  const diagramLink = $("#diagram-link");
+  diagramLink.classList.toggle("hidden", state.mode !== "wiring");
+  diagramLink.href = `${state.assetBase}/diagram.png?v=${ASSET_VERSION}`;
   $(".question-card").classList.toggle("wrong-state", Boolean(state.mistakes[number] && state.answers[number] !== question.answer));
   // questions.json lives in output/, so resolve its image path from the site root.
   $("#question-image").src = `${state.assetBase}/${question.question_image}?v=${ASSET_VERSION}`;
@@ -232,6 +274,12 @@ document.querySelectorAll(".mode-button").forEach((button) => {
   });
 });
 $("#start-button").addEventListener("click", startExam);
+$("#fig-button").addEventListener("click", openFigureCards);
+$("#home-button").addEventListener("click", () => {
+  clearInterval(state.timerId);
+  state.reviewingResult = false;
+  showScreen(startScreen);
+});
 $("#hint-button").addEventListener("click", () => {
   const question = state.questions[state.current];
   if (!question) return;
@@ -242,4 +290,26 @@ $("#prev-button").addEventListener("click", () => { if (state.current > 0) { sta
 $("#next-button").addEventListener("click", () => { if (state.current === state.questions.length - 1) submitExam(); else { state.current += 1; renderQuestion(); } });
 $("#return-result-button").addEventListener("click", () => { state.reviewingResult = false; showScreen(resultScreen); });
 $("#restart-button").addEventListener("click", () => { showScreen(startScreen); $(".timer").style.color = "var(--blue-deep)"; });
+$("#fig-card").addEventListener("click", () => {
+  if (figState.revealed) {
+    figState.current = (figState.current + 1) % figState.cards.length;
+    figState.revealed = false;
+  } else {
+    figState.revealed = true;
+  }
+  renderFigureCard();
+});
+$("#fig-reveal-button").addEventListener("click", () => { figState.revealed = !figState.revealed; renderFigureCard(); });
+$("#fig-prev-button").addEventListener("click", () => { if (figState.current > 0) { figState.current -= 1; figState.revealed = false; renderFigureCard(); } });
+$("#fig-next-button").addEventListener("click", () => { if (figState.current < figState.cards.length - 1) { figState.current += 1; figState.revealed = false; renderFigureCard(); } });
+$("#fig-shuffle-button").addEventListener("click", () => {
+  for (let i = figState.cards.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [figState.cards[i], figState.cards[j]] = [figState.cards[j], figState.cards[i]];
+  }
+  figState.current = 0;
+  figState.revealed = false;
+  renderFigureCard();
+});
+$("#fig-home-button").addEventListener("click", () => showScreen(startScreen));
 loadCatalog().catch((error) => console.warn(error.message));

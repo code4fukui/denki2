@@ -13,5 +13,15 @@
     "id": "2025-lower",
     "label": "令和7年度下期（2025年10月）",
     "data": "output/2025-lower/questions.json"
+  },
+  {
+    "id": "2024-upper",
+    "label": "令和6年度上期（2024年5月）",
+    "data": "output/2024-upper/questions.json"
+  },
+  {
+    "id": "2024-lower",
+    "label": "令和6年度下期（2024年10月）",
+    "data": "output/2024-lower/questions.json"
   }
 ]
