@@ -109,18 +109,19 @@ function renderExamChoices() {
     $("#exam-subtitle").textContent = selectedExam.label;
   }
   state.catalog.forEach((exam) => {
-    const button = document.createElement("button");
-    button.className = `exam-button ${exam.id === state.examId ? "selected" : ""}`;
-    button.textContent = exam.label;
-    button.addEventListener("click", () => {
-      state.examId = exam.id;
-      const selected = state.catalog.find((item) => item.id === state.examId);
-      $("#selected-exam-label").textContent = selected.label;
-      $("#exam-subtitle").textContent = selected.label;
-      renderExamChoices();
-    });
-    container.appendChild(button);
+    const option = document.createElement("option");
+    option.value = exam.id;
+    option.textContent = exam.label;
+    option.selected = exam.id === state.examId;
+    container.appendChild(option);
   });
+  container.onchange = () => {
+    state.examId = container.value;
+    const selected = state.catalog.find((item) => item.id === state.examId);
+    if (!selected) return;
+    $("#selected-exam-label").textContent = selected.label;
+    $("#exam-subtitle").textContent = selected.label;
+  };
 }
 
 function renderQuestion() {
