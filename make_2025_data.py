@@ -117,6 +117,7 @@ def make_set(set_name, config):
         raise ValueError(f"{set_name}: question ranges are incomplete")
     (out_dir / "questions.json").write_text(json.dumps(records, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (out_dir / "meta.json").write_text(json.dumps({"label": config["label"], "source_pdf": config["source_pdf"], "count": 50}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    subprocess.run(["convert", str(page_dir / "page-11.png"), "-crop", "1250x470+230+100", "+repage", str(out_dir / "diagram-intro.png")], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     print(f"created {set_name}: 50 questions")
 
 for name, config in SETS.items():

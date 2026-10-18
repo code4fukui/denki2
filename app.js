@@ -1,6 +1,6 @@
 const OPTION_LABELS = ["イ", "ロ", "ハ", "ニ"];
 const EXAM_MINUTES = 120;
-const ASSET_VERSION = "20261018-2";
+const ASSET_VERSION = "20261018-4";
 
 const state = {
   catalog: [],
@@ -45,7 +45,7 @@ async function loadQuestions() {
 
 async function loadCatalog() {
   if (state.catalog.length) return;
-  const response = await fetch("output/exams.json?v=20261018-2");
+  const response = await fetch(`output/exams.json?v=${ASSET_VERSION}`);
   if (!response.ok) throw new Error("試験年度データを読み込めませんでした");
   state.catalog = await response.json();
   const examDate = (exam) => {
@@ -138,6 +138,10 @@ function renderQuestion() {
   diagramLink.classList.toggle("hidden", !isWiring);
   diagramLink.href = `${state.assetBase}/diagram.png?v=${ASSET_VERSION}`;
   $("#diagram-panel").classList.toggle("hidden", !isWiring);
+  const diagramIntro = $("#diagram-intro-image");
+  diagramIntro.classList.remove("hidden");
+  diagramIntro.src = `${state.assetBase}/diagram-intro.png?v=${ASSET_VERSION}`;
+  diagramIntro.onerror = () => diagramIntro.classList.add("hidden");
   $("#diagram-image").src = diagramLink.href;
   $("#diagram-panel-link").href = diagramLink.href;
   $(".question-card").classList.toggle("wrong-state", Boolean(state.mistakes[number] && state.answers[number] !== question.answer));

@@ -10,6 +10,18 @@ PDF_DIR = ROOT / "pdf"
 TMP_DIR = ROOT / "tmp" / "pdfs"
 OUTPUT_DIR = ROOT / "output"
 
+FIXED_2021_LINES = {
+    5: [286, 560, 797, 1104, 1478, 1907],
+    6: [133, 685, 1043, 1367, 1985],
+    7: [135, 563, 868, 1174, 1439, 1664, 1931],
+    8: [127, 476, 893, 1187, 1719, 1986],
+    9: [134, 577, 1012, 1244, 1469, 1985],
+    10: [135, 428, 923, 1159, 1394, 1795],
+    11: [516, 634, 752, 946, 1065, 1222, 1339, 1417, 1535, 1730, 1886],
+    12: [183, 467, 711, 995, 1482, 2012],
+    13: [170, 623, 972, 1426, 1706, 2020],
+}
+
 # PDFs added to pdf/ but not yet registered in output/exams.json.
 SETS = [
     ("2009", "平成21年度（2009年6月）", "20090607_co_second_q01.pdf", "20090607_co_second_a01.pdf"),
@@ -130,6 +142,9 @@ def make_set(set_id, label, question_name, answer_name):
             continue
         page_specs.append([page_no, lines])
 
+    if set_id.startswith("2021-"):
+        page_specs = [[page_no, FIXED_2021_LINES[page_no][:]] for page_no in range(5, 14)]
+
     # Older editions use a slightly different pagination. Normalize only the
     # missing/extra outer row rules; the detected inner rules remain intact.
     if set_id == "2009":
@@ -137,6 +152,8 @@ def make_set(set_id, label, question_name, answer_name):
     elif set_id.startswith(("2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019")):
         expected = [6, 4, 5, 6, 5, 4, 10, 6, 4]
     elif set_id == "2022-lower-am":
+        expected = [5, 4, 6, 5, 5, 5, 10, 5, 5]
+    elif set_id.startswith("2021-"):
         expected = [5, 4, 6, 5, 5, 5, 10, 5, 5]
     elif set_id == "2022-upper-am":
         expected = [5, 4, 6, 5, 5, 5, 10, 5, 5]
@@ -160,14 +177,18 @@ def make_set(set_id, label, question_name, answer_name):
                 break
             height = bottom - top - 4
             old_layout = set_id[:4].isdigit() and int(set_id[:4]) < 2020
-            width = 1400 if old_layout else (1250 if page_no >= 11 else 1245)
-            x = 100 if old_layout else (230 if page_no >= 11 else 245)
+            layout_2021 = set_id.startswith("2021-")
+            width = (1290 if page_no >= 11 else 1232) if layout_2021 else (1400 if old_layout else (1250 if page_no >= 11 else 1245))
+            x = (100 if page_no >= 11 else 158) if layout_2021 else (100 if old_layout else (230 if page_no >= 11 else 245))
             whole_name = f"q{number:03d}.png"
             whole = image_dir / whole_name
             question = image_dir / f"q{number:03d}-question.png"
             answer = image_dir / f"q{number:03d}-answer.png"
             subprocess.run(["convert", str(page_dir / f"page-{page_no:02d}.png"), "-crop", f"{width}x{height}+{x}+{top + 2}", "+repage", str(whole)], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            split_x = (430 if old_layout else 495) if number <= 40 else (330 if old_layout else 318)
+            # 令和3年度PDFはページごとに「問い／答え」の境界が異なる。
+            # 上期午前の26〜30問（10ページ）と31〜40問（11ページ）は、
+            # 境界より右まで問題側に含めると選択肢の先頭が欠ける。
+            split_x = ((518 if page_no >= 11 else 490) if layout_2021 else (430 if old_layout else 495)) if number <= 40 else (430 if layout_2021 else (330 if old_layout else 318))
             subprocess.run(["convert", str(whole), "-crop", f"{split_x}x{height}+0+0", "+repage", str(question)], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             subprocess.run(["convert", str(whole), "-crop", f"{width - split_x}x{height}+{split_x}+0", "+repage", str(answer)], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             records.append({"number": number, "answer": answers[number], "explanation": explanation(number, answers[number]), "image": f"questions/{whole_name}", "question_image": f"questions/{question.name}", "answer_image": f"questions/{answer.name}", "source_page": page_no})
@@ -177,6 +198,16 @@ def make_set(set_id, label, question_name, answer_name):
     (out_dir / "questions.json").write_text(json.dumps(records, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (out_dir / "meta.json").write_text(json.dumps({"label": label, "source_pdf": question_name, "count": 50}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     shutil.copy2(page_dir / "page-15.png", out_dir / "diagram.png")
+    # 問31が始まるページ上部の「問題2・配線図」の説明と注意を、
+    # 後半30問の配線図欄に常時表示できるよう別画像にする。
+    intro_layout_2021 = set_id.startswith("2021-")
+    intro_width = 1290 if intro_layout_2021 else 1400
+    intro_x = 100 if intro_layout_2021 else 100
+    subprocess.run([
+        "convert", str(page_dir / "page-11.png"),
+        "-crop", f"{intro_width}x450+{intro_x}+55", "+repage",
+        str(out_dir / "diagram-intro.png")
+    ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     print(f"created {set_id}: 50 questions")
 
 

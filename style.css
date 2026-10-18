@@ -95,7 +95,9 @@ button { font: inherit; cursor: pointer; }
 .diagram-panel-heading { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; color: var(--ink); font-size: 12px; font-weight: 800; }
 .diagram-panel-heading a { color: var(--blue); font-size: 11px; text-decoration: none; }
 .diagram-panel-heading a:hover { text-decoration: underline; }
+.diagram-intro-image { display: block; width: 100%; height: auto; max-height: 230px; object-fit: contain; object-position: top center; margin-bottom: 10px; background: #fafbfd; }
 .diagram-panel img { display: block; width: 100%; height: calc(100vh - 105px); min-height: 420px; object-fit: contain; object-position: top center; background: #fafbfd; }
+.diagram-panel .diagram-intro-image { height: auto; min-height: 0; }
 .question-nav { padding: 18px; background: white; border: 1px solid var(--line); border-radius: 18px; position: sticky; top: 20px; }
 .nav-heading, .review-heading { display: flex; justify-content: space-between; align-items: center; }
 .nav-heading { margin-bottom: 15px; font-weight: 800; font-size: 13px; }

@@ -59,6 +59,7 @@ def make_set(name, config):
     (out_dir / "questions.json").write_text(json.dumps(records, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (out_dir / "meta.json").write_text(json.dumps({"label": config["label"], "source_pdf": config["source_pdf"], "count": 50}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     shutil.copy2(page_dir / "page-15.png", out_dir / "diagram.png")
+    subprocess.run(["convert", str(page_dir / "page-11.png"), "-crop", "1250x470+230+100", "+repage", str(out_dir / "diagram-intro.png")], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     print(f"created {name}: 50 questions")
 
 for name, config in SETS.items():
