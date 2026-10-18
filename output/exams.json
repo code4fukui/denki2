@@ -23,5 +23,25 @@
     "id": "2024-lower",
     "label": "令和6年度下期（2024年10月）",
     "data": "output/2024-lower/questions.json"
+  },
+  {
+    "id": "2023-upper-am",
+    "label": "令和5年度上期・午前（2023年5月）",
+    "data": "output/2023-upper-am/questions.json"
+  },
+  {
+    "id": "2023-upper-pm",
+    "label": "令和5年度上期・午後（2023年5月）",
+    "data": "output/2023-upper-pm/questions.json"
+  },
+  {
+    "id": "2023-lower-am",
+    "label": "令和5年度下期・午前（2023年10月）",
+    "data": "output/2023-lower-am/questions.json"
+  },
+  {
+    "id": "2023-lower-pm",
+    "label": "令和5年度下期・午後（2023年10月）",
+    "data": "output/2023-lower-pm/questions.json"
   }
 ]

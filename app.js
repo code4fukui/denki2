@@ -45,7 +45,7 @@ async function loadQuestions() {
 
 async function loadCatalog() {
   if (state.catalog.length) return;
-  const response = await fetch("output/exams.json");
+  const response = await fetch("output/exams.json?v=20261018");
   if (!response.ok) throw new Error("試験年度データを読み込めませんでした");
   state.catalog = await response.json();
   renderExamChoices();
