@@ -48,6 +48,11 @@ async function loadCatalog() {
   const response = await fetch("output/exams.json?v=20261018-2");
   if (!response.ok) throw new Error("試験年度データを読み込めませんでした");
   state.catalog = await response.json();
+  const examDate = (exam) => {
+    const match = exam.label.match(/[（(](\d{4})年(\d{1,2})月[）)]/);
+    return match ? Number(match[1]) * 100 + Number(match[2]) : 0;
+  };
+  state.catalog.sort((a, b) => examDate(b) - examDate(a));
   renderExamChoices();
 }
 
@@ -98,6 +103,11 @@ async function openFigureCards() {
 function renderExamChoices() {
   const container = $("#exam-sets");
   container.innerHTML = "";
+  const selectedExam = state.catalog.find((exam) => exam.id === state.examId);
+  if (selectedExam) {
+    $("#selected-exam-label").textContent = selectedExam.label;
+    $("#exam-subtitle").textContent = selectedExam.label;
+  }
   state.catalog.forEach((exam) => {
     const button = document.createElement("button");
     button.className = `exam-button ${exam.id === state.examId ? "selected" : ""}`;
@@ -106,6 +116,7 @@ function renderExamChoices() {
       state.examId = exam.id;
       const selected = state.catalog.find((item) => item.id === state.examId);
       $("#selected-exam-label").textContent = selected.label;
+      $("#exam-subtitle").textContent = selected.label;
       renderExamChoices();
     });
     container.appendChild(button);
@@ -116,16 +127,17 @@ function renderQuestion() {
   const question = state.questions[state.current];
   const number = question.number;
   const position = state.current + 1;
+  const isWiring = state.mode === "wiring" || (state.mode === "all" && number > 30);
   $("#progress-text").textContent = `問題 ${position} / ${state.questions.length}`;
   $("#answered-text").textContent = `回答済み ${Object.keys(state.answers).length}問`;
   $("#nav-count").textContent = `${Object.keys(state.answers).length} / ${state.questions.length}`;
   $("#progress-bar").style.width = `${(position / state.questions.length) * 100}%`;
   $("#section-label").textContent = number <= 30 ? `問題${number}・一般問題` : `問題${number}・配線図`;
-  examScreen.classList.toggle("wiring-layout", state.mode === "wiring");
+  examScreen.classList.toggle("wiring-layout", isWiring);
   const diagramLink = $("#diagram-link");
-  diagramLink.classList.toggle("hidden", state.mode !== "wiring");
+  diagramLink.classList.toggle("hidden", !isWiring);
   diagramLink.href = `${state.assetBase}/diagram.png?v=${ASSET_VERSION}`;
-  $("#diagram-panel").classList.toggle("hidden", state.mode !== "wiring");
+  $("#diagram-panel").classList.toggle("hidden", !isWiring);
   $("#diagram-image").src = diagramLink.href;
   $("#diagram-panel-link").href = diagramLink.href;
   $(".question-card").classList.toggle("wrong-state", Boolean(state.mistakes[number] && state.answers[number] !== question.answer));

@@ -2,6 +2,7 @@ import json
 import re
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -135,6 +136,12 @@ def make_set(set_id, label, question_name, answer_name):
         expected = [6, 5, 5, 5, 5, 4, 10, 5, 5]
     elif set_id.startswith(("2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019")):
         expected = [6, 4, 5, 6, 5, 4, 10, 6, 4]
+    elif set_id == "2022-lower-am":
+        expected = [5, 4, 6, 5, 5, 5, 10, 5, 5]
+    elif set_id == "2022-upper-am":
+        expected = [5, 4, 6, 5, 5, 5, 10, 5, 5]
+    elif set_id.startswith("2022-"):
+        expected = [5, 4, 6, 4, 5, 6, 10, 5, 5]
     else:
         expected = [5, 4, 6, 5, 6, 4, 10, 5, 5]
     for index, (page_no, lines) in enumerate(page_specs):
@@ -173,7 +180,10 @@ def make_set(set_id, label, question_name, answer_name):
     print(f"created {set_id}: 50 questions")
 
 
+requested = set(sys.argv[1:])
 for item in SETS:
+    if requested and item[0] not in requested:
+        continue
     make_set(*item)
 
 catalog_path = OUTPUT_DIR / "exams.json"
