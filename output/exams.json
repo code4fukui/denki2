@@ -43,5 +43,155 @@
     "id": "2023-lower-pm",
     "label": "令和5年度下期・午後（2023年10月）",
     "data": "output/2023-lower-pm/questions.json"
+  },
+  {
+    "id": "2009",
+    "label": "平成21年度（2009年6月）",
+    "data": "output/2009/questions.json"
+  },
+  {
+    "id": "2010",
+    "label": "平成22年度（2010年6月）",
+    "data": "output/2010/questions.json"
+  },
+  {
+    "id": "2011-upper",
+    "label": "平成23年度上期（2011年6月）",
+    "data": "output/2011-upper/questions.json"
+  },
+  {
+    "id": "2011-lower",
+    "label": "平成23年度下期（2011年10月）",
+    "data": "output/2011-lower/questions.json"
+  },
+  {
+    "id": "2012-upper",
+    "label": "平成24年度上期（2012年6月）",
+    "data": "output/2012-upper/questions.json"
+  },
+  {
+    "id": "2012-lower",
+    "label": "平成24年度下期（2012年10月）",
+    "data": "output/2012-lower/questions.json"
+  },
+  {
+    "id": "2013-upper",
+    "label": "平成25年度上期（2013年6月）",
+    "data": "output/2013-upper/questions.json"
+  },
+  {
+    "id": "2013-lower",
+    "label": "平成25年度下期（2013年10月）",
+    "data": "output/2013-lower/questions.json"
+  },
+  {
+    "id": "2014-upper",
+    "label": "平成26年度上期（2014年6月）",
+    "data": "output/2014-upper/questions.json"
+  },
+  {
+    "id": "2014-lower",
+    "label": "平成26年度下期（2014年10月）",
+    "data": "output/2014-lower/questions.json"
+  },
+  {
+    "id": "2015-upper",
+    "label": "平成27年度上期（2015年6月）",
+    "data": "output/2015-upper/questions.json"
+  },
+  {
+    "id": "2015-lower",
+    "label": "平成27年度下期（2015年10月）",
+    "data": "output/2015-lower/questions.json"
+  },
+  {
+    "id": "2016-upper",
+    "label": "平成28年度上期（2016年6月）",
+    "data": "output/2016-upper/questions.json"
+  },
+  {
+    "id": "2016-lower",
+    "label": "平成28年度下期（2016年10月）",
+    "data": "output/2016-lower/questions.json"
+  },
+  {
+    "id": "2017-upper",
+    "label": "平成29年度上期（2017年6月）",
+    "data": "output/2017-upper/questions.json"
+  },
+  {
+    "id": "2017-lower",
+    "label": "平成29年度下期（2017年9月）",
+    "data": "output/2017-lower/questions.json"
+  },
+  {
+    "id": "2018-upper",
+    "label": "平成30年度上期（2018年6月）",
+    "data": "output/2018-upper/questions.json"
+  },
+  {
+    "id": "2018-lower",
+    "label": "平成30年度下期（2018年10月）",
+    "data": "output/2018-lower/questions.json"
+  },
+  {
+    "id": "2019-upper",
+    "label": "2019年度上期（2019年6月）",
+    "data": "output/2019-upper/questions.json"
+  },
+  {
+    "id": "2019-lower",
+    "label": "2019年度下期（2019年10月）",
+    "data": "output/2019-lower/questions.json"
+  },
+  {
+    "id": "2020-lower-am",
+    "label": "令和2年度下期・午前（2020年10月）",
+    "data": "output/2020-lower-am/questions.json"
+  },
+  {
+    "id": "2020-lower-pm",
+    "label": "令和2年度下期・午後（2020年10月）",
+    "data": "output/2020-lower-pm/questions.json"
+  },
+  {
+    "id": "2021-upper-am",
+    "label": "令和3年度上期・午前（2021年5月）",
+    "data": "output/2021-upper-am/questions.json"
+  },
+  {
+    "id": "2021-upper-pm",
+    "label": "令和3年度上期・午後（2021年5月）",
+    "data": "output/2021-upper-pm/questions.json"
+  },
+  {
+    "id": "2021-lower-am",
+    "label": "令和3年度下期・午前（2021年10月）",
+    "data": "output/2021-lower-am/questions.json"
+  },
+  {
+    "id": "2021-lower-pm",
+    "label": "令和3年度下期・午後（2021年10月）",
+    "data": "output/2021-lower-pm/questions.json"
+  },
+  {
+    "id": "2022-upper-am",
+    "label": "令和4年度上期・午前（2022年5月）",
+    "data": "output/2022-upper-am/questions.json"
+  },
+  {
+    "id": "2022-upper-pm",
+    "label": "令和4年度上期・午後（2022年5月）",
+    "data": "output/2022-upper-pm/questions.json"
+  },
+  {
+    "id": "2022-lower-am",
+    "label": "令和4年度下期・午前（2022年10月）",
+    "data": "output/2022-lower-am/questions.json"
+  },
+  {
+    "id": "2022-lower-pm",
+    "label": "令和4年度下期・午後（2022年10月）",
+    "data": "output/2022-lower-pm/questions.json"
   }
 ]

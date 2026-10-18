@@ -1,0 +1,452 @@
+[
+  {
+    "number": 1,
+    "answer": "ロ",
+    "explanation": "正答は「ロ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q001.png",
+    "question_image": "questions/q001-question.png",
+    "answer_image": "questions/q001-answer.png",
+    "source_page": 5
+  },
+  {
+    "number": 2,
+    "answer": "ロ",
+    "explanation": "正答は「ロ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q002.png",
+    "question_image": "questions/q002-question.png",
+    "answer_image": "questions/q002-answer.png",
+    "source_page": 5
+  },
+  {
+    "number": 3,
+    "answer": "ハ",
+    "explanation": "正答は「ハ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q003.png",
+    "question_image": "questions/q003-question.png",
+    "answer_image": "questions/q003-answer.png",
+    "source_page": 5
+  },
+  {
+    "number": 4,
+    "answer": "イ",
+    "explanation": "正答は「イ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q004.png",
+    "question_image": "questions/q004-question.png",
+    "answer_image": "questions/q004-answer.png",
+    "source_page": 5
+  },
+  {
+    "number": 5,
+    "answer": "ハ",
+    "explanation": "正答は「ハ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q005.png",
+    "question_image": "questions/q005-question.png",
+    "answer_image": "questions/q005-answer.png",
+    "source_page": 5
+  },
+  {
+    "number": 6,
+    "answer": "ロ",
+    "explanation": "正答は「ロ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q006.png",
+    "question_image": "questions/q006-question.png",
+    "answer_image": "questions/q006-answer.png",
+    "source_page": 5
+  },
+  {
+    "number": 7,
+    "answer": "ハ",
+    "explanation": "正答は「ハ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q007.png",
+    "question_image": "questions/q007-question.png",
+    "answer_image": "questions/q007-answer.png",
+    "source_page": 6
+  },
+  {
+    "number": 8,
+    "answer": "ロ",
+    "explanation": "正答は「ロ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q008.png",
+    "question_image": "questions/q008-question.png",
+    "answer_image": "questions/q008-answer.png",
+    "source_page": 6
+  },
+  {
+    "number": 9,
+    "answer": "ロ",
+    "explanation": "正答は「ロ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q009.png",
+    "question_image": "questions/q009-question.png",
+    "answer_image": "questions/q009-answer.png",
+    "source_page": 6
+  },
+  {
+    "number": 10,
+    "answer": "イ",
+    "explanation": "正答は「イ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q010.png",
+    "question_image": "questions/q010-question.png",
+    "answer_image": "questions/q010-answer.png",
+    "source_page": 6
+  },
+  {
+    "number": 11,
+    "answer": "イ",
+    "explanation": "正答は「イ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q011.png",
+    "question_image": "questions/q011-question.png",
+    "answer_image": "questions/q011-answer.png",
+    "source_page": 7
+  },
+  {
+    "number": 12,
+    "answer": "ハ",
+    "explanation": "正答は「ハ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q012.png",
+    "question_image": "questions/q012-question.png",
+    "answer_image": "questions/q012-answer.png",
+    "source_page": 7
+  },
+  {
+    "number": 13,
+    "answer": "ニ",
+    "explanation": "正答は「ニ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q013.png",
+    "question_image": "questions/q013-question.png",
+    "answer_image": "questions/q013-answer.png",
+    "source_page": 7
+  },
+  {
+    "number": 14,
+    "answer": "イ",
+    "explanation": "正答は「イ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q014.png",
+    "question_image": "questions/q014-question.png",
+    "answer_image": "questions/q014-answer.png",
+    "source_page": 7
+  },
+  {
+    "number": 15,
+    "answer": "ハ",
+    "explanation": "正答は「ハ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q015.png",
+    "question_image": "questions/q015-question.png",
+    "answer_image": "questions/q015-answer.png",
+    "source_page": 7
+  },
+  {
+    "number": 16,
+    "answer": "ハ",
+    "explanation": "正答は「ハ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q016.png",
+    "question_image": "questions/q016-question.png",
+    "answer_image": "questions/q016-answer.png",
+    "source_page": 8
+  },
+  {
+    "number": 17,
+    "answer": "ロ",
+    "explanation": "正答は「ロ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q017.png",
+    "question_image": "questions/q017-question.png",
+    "answer_image": "questions/q017-answer.png",
+    "source_page": 8
+  },
+  {
+    "number": 18,
+    "answer": "イ",
+    "explanation": "正答は「イ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q018.png",
+    "question_image": "questions/q018-question.png",
+    "answer_image": "questions/q018-answer.png",
+    "source_page": 8
+  },
+  {
+    "number": 19,
+    "answer": "ロ",
+    "explanation": "正答は「ロ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q019.png",
+    "question_image": "questions/q019-question.png",
+    "answer_image": "questions/q019-answer.png",
+    "source_page": 8
+  },
+  {
+    "number": 20,
+    "answer": "ニ",
+    "explanation": "正答は「ニ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q020.png",
+    "question_image": "questions/q020-question.png",
+    "answer_image": "questions/q020-answer.png",
+    "source_page": 8
+  },
+  {
+    "number": 21,
+    "answer": "ニ",
+    "explanation": "正答は「ニ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q021.png",
+    "question_image": "questions/q021-question.png",
+    "answer_image": "questions/q021-answer.png",
+    "source_page": 8
+  },
+  {
+    "number": 22,
+    "answer": "ニ",
+    "explanation": "正答は「ニ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q022.png",
+    "question_image": "questions/q022-question.png",
+    "answer_image": "questions/q022-answer.png",
+    "source_page": 9
+  },
+  {
+    "number": 23,
+    "answer": "イ",
+    "explanation": "正答は「イ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q023.png",
+    "question_image": "questions/q023-question.png",
+    "answer_image": "questions/q023-answer.png",
+    "source_page": 9
+  },
+  {
+    "number": 24,
+    "answer": "ハ",
+    "explanation": "正答は「ハ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q024.png",
+    "question_image": "questions/q024-question.png",
+    "answer_image": "questions/q024-answer.png",
+    "source_page": 9
+  },
+  {
+    "number": 25,
+    "answer": "イ",
+    "explanation": "正答は「イ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q025.png",
+    "question_image": "questions/q025-question.png",
+    "answer_image": "questions/q025-answer.png",
+    "source_page": 9
+  },
+  {
+    "number": 26,
+    "answer": "ニ",
+    "explanation": "正答は「ニ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q026.png",
+    "question_image": "questions/q026-question.png",
+    "answer_image": "questions/q026-answer.png",
+    "source_page": 9
+  },
+  {
+    "number": 27,
+    "answer": "ロ",
+    "explanation": "正答は「ロ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q027.png",
+    "question_image": "questions/q027-question.png",
+    "answer_image": "questions/q027-answer.png",
+    "source_page": 10
+  },
+  {
+    "number": 28,
+    "answer": "ニ",
+    "explanation": "正答は「ニ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q028.png",
+    "question_image": "questions/q028-question.png",
+    "answer_image": "questions/q028-answer.png",
+    "source_page": 10
+  },
+  {
+    "number": 29,
+    "answer": "ニ",
+    "explanation": "正答は「ニ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q029.png",
+    "question_image": "questions/q029-question.png",
+    "answer_image": "questions/q029-answer.png",
+    "source_page": 10
+  },
+  {
+    "number": 30,
+    "answer": "ハ",
+    "explanation": "正答は「ハ」です。問題文の条件を電気工事の基本公式・法令・施工基準に照らして確認します。",
+    "image": "questions/q030.png",
+    "question_image": "questions/q030-question.png",
+    "answer_image": "questions/q030-answer.png",
+    "source_page": 10
+  },
+  {
+    "number": 31,
+    "answer": "ハ",
+    "explanation": "正答は「ハ」です。配線図の記号、接続関係、電源と負荷の位置を確認し、施工条件に照らして判断します。",
+    "image": "questions/q031.png",
+    "question_image": "questions/q031-question.png",
+    "answer_image": "questions/q031-answer.png",
+    "source_page": 11
+  },
+  {
+    "number": 32,
+    "answer": "ニ",
+    "explanation": "正答は「ニ」です。配線図の記号、接続関係、電源と負荷の位置を確認し、施工条件に照らして判断します。",
+    "image": "questions/q032.png",
+    "question_image": "questions/q032-question.png",
+    "answer_image": "questions/q032-answer.png",
+    "source_page": 11
+  },
+  {
+    "number": 33,
+    "answer": "ハ",
+    "explanation": "正答は「ハ」です。配線図の記号、接続関係、電源と負荷の位置を確認し、施工条件に照らして判断します。",
+    "image": "questions/q033.png",
+    "question_image": "questions/q033-question.png",
+    "answer_image": "questions/q033-answer.png",
+    "source_page": 11
+  },
+  {
+    "number": 34,
+    "answer": "ロ",
+    "explanation": "正答は「ロ」です。配線図の記号、接続関係、電源と負荷の位置を確認し、施工条件に照らして判断します。",
+    "image": "questions/q034.png",
+    "question_image": "questions/q034-question.png",
+    "answer_image": "questions/q034-answer.png",
+    "source_page": 11
+  },
+  {
+    "number": 35,
+    "answer": "ハ",
+    "explanation": "正答は「ハ」です。配線図の記号、接続関係、電源と負荷の位置を確認し、施工条件に照らして判断します。",
+    "image": "questions/q035.png",
+    "question_image": "questions/q035-question.png",
+    "answer_image": "questions/q035-answer.png",
+    "source_page": 11
+  },
+  {
+    "number": 36,
+    "answer": "イ",
+    "explanation": "正答は「イ」です。配線図の記号、接続関係、電源と負荷の位置を確認し、施工条件に照らして判断します。",
+    "image": "questions/q036.png",
+    "question_image": "questions/q036-question.png",
+    "answer_image": "questions/q036-answer.png",
+    "source_page": 11
+  },
+  {
+    "number": 37,
+    "answer": "ロ",
+    "explanation": "正答は「ロ」です。配線図の記号、接続関係、電源と負荷の位置を確認し、施工条件に照らして判断します。",
+    "image": "questions/q037.png",
+    "question_image": "questions/q037-question.png",
+    "answer_image": "questions/q037-answer.png",
+    "source_page": 11
+  },
+  {
+    "number": 38,
+    "answer": "ニ",
+    "explanation": "正答は「ニ」です。配線図の記号、接続関係、電源と負荷の位置を確認し、施工条件に照らして判断します。",
+    "image": "questions/q038.png",
+    "question_image": "questions/q038-question.png",
+    "answer_image": "questions/q038-answer.png",
+    "source_page": 11
+  },
+  {
+    "number": 39,
+    "answer": "イ",
+    "explanation": "正答は「イ」です。配線図の記号、接続関係、電源と負荷の位置を確認し、施工条件に照らして判断します。",
+    "image": "questions/q039.png",
+    "question_image": "questions/q039-question.png",
+    "answer_image": "questions/q039-answer.png",
+    "source_page": 11
+  },
+  {
+    "number": 40,
+    "answer": "イ",
+    "explanation": "正答は「イ」です。配線図の記号、接続関係、電源と負荷の位置を確認し、施工条件に照らして判断します。",
+    "image": "questions/q040.png",
+    "question_image": "questions/q040-question.png",
+    "answer_image": "questions/q040-answer.png",
+    "source_page": 11
+  },
+  {
+    "number": 41,
+    "answer": "ロ",
+    "explanation": "正答は「ロ」です。配線図の記号、接続関係、電源と負荷の位置を確認し、施工条件に照らして判断します。",
+    "image": "questions/q041.png",
+    "question_image": "questions/q041-question.png",
+    "answer_image": "questions/q041-answer.png",
+    "source_page": 12
+  },
+  {
+    "number": 42,
+    "answer": "イ",
+    "explanation": "正答は「イ」です。配線図の記号、接続関係、電源と負荷の位置を確認し、施工条件に照らして判断します。",
+    "image": "questions/q042.png",
+    "question_image": "questions/q042-question.png",
+    "answer_image": "questions/q042-answer.png",
+    "source_page": 12
+  },
+  {
+    "number": 43,
+    "answer": "ニ",
+    "explanation": "正答は「ニ」です。配線図の記号、接続関係、電源と負荷の位置を確認し、施工条件に照らして判断します。",
+    "image": "questions/q043.png",
+    "question_image": "questions/q043-question.png",
+    "answer_image": "questions/q043-answer.png",
+    "source_page": 12
+  },
+  {
+    "number": 44,
+    "answer": "イ",
+    "explanation": "正答は「イ」です。配線図の記号、接続関係、電源と負荷の位置を確認し、施工条件に照らして判断します。",
+    "image": "questions/q044.png",
+    "question_image": "questions/q044-question.png",
+    "answer_image": "questions/q044-answer.png",
+    "source_page": 12
+  },
+  {
+    "number": 45,
+    "answer": "ロ",
+    "explanation": "正答は「ロ」です。配線図の記号、接続関係、電源と負荷の位置を確認し、施工条件に照らして判断します。",
+    "image": "questions/q045.png",
+    "question_image": "questions/q045-question.png",
+    "answer_image": "questions/q045-answer.png",
+    "source_page": 12
+  },
+  {
+    "number": 46,
+    "answer": "ニ",
+    "explanation": "正答は「ニ」です。配線図の記号、接続関係、電源と負荷の位置を確認し、施工条件に照らして判断します。",
+    "image": "questions/q046.png",
+    "question_image": "questions/q046-question.png",
+    "answer_image": "questions/q046-answer.png",
+    "source_page": 12
+  },
+  {
+    "number": 47,
+    "answer": "ロ",
+    "explanation": "正答は「ロ」です。配線図の記号、接続関係、電源と負荷の位置を確認し、施工条件に照らして判断します。",
+    "image": "questions/q047.png",
+    "question_image": "questions/q047-question.png",
+    "answer_image": "questions/q047-answer.png",
+    "source_page": 13
+  },
+  {
+    "number": 48,
+    "answer": "ニ",
+    "explanation": "正答は「ニ」です。配線図の記号、接続関係、電源と負荷の位置を確認し、施工条件に照らして判断します。",
+    "image": "questions/q048.png",
+    "question_image": "questions/q048-question.png",
+    "answer_image": "questions/q048-answer.png",
+    "source_page": 13
+  },
+  {
+    "number": 49,
+    "answer": "イ",
+    "explanation": "正答は「イ」です。配線図の記号、接続関係、電源と負荷の位置を確認し、施工条件に照らして判断します。",
+    "image": "questions/q049.png",
+    "question_image": "questions/q049-question.png",
+    "answer_image": "questions/q049-answer.png",
+    "source_page": 13
+  },
+  {
+    "number": 50,
+    "answer": "ハ",
+    "explanation": "正答は「ハ」です。配線図の記号、接続関係、電源と負荷の位置を確認し、施工条件に照らして判断します。",
+    "image": "questions/q050.png",
+    "question_image": "questions/q050-question.png",
+    "answer_image": "questions/q050-answer.png",
+    "source_page": 13
+  }
+]

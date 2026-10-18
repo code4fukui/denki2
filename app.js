@@ -1,6 +1,6 @@
 const OPTION_LABELS = ["イ", "ロ", "ハ", "ニ"];
 const EXAM_MINUTES = 120;
-const ASSET_VERSION = "20261014-5";
+const ASSET_VERSION = "20261018-2";
 
 const state = {
   catalog: [],
@@ -45,7 +45,7 @@ async function loadQuestions() {
 
 async function loadCatalog() {
   if (state.catalog.length) return;
-  const response = await fetch("output/exams.json?v=20261018");
+  const response = await fetch("output/exams.json?v=20261018-2");
   if (!response.ok) throw new Error("試験年度データを読み込めませんでした");
   state.catalog = await response.json();
   renderExamChoices();
@@ -121,9 +121,13 @@ function renderQuestion() {
   $("#nav-count").textContent = `${Object.keys(state.answers).length} / ${state.questions.length}`;
   $("#progress-bar").style.width = `${(position / state.questions.length) * 100}%`;
   $("#section-label").textContent = number <= 30 ? `問題${number}・一般問題` : `問題${number}・配線図`;
+  examScreen.classList.toggle("wiring-layout", state.mode === "wiring");
   const diagramLink = $("#diagram-link");
   diagramLink.classList.toggle("hidden", state.mode !== "wiring");
   diagramLink.href = `${state.assetBase}/diagram.png?v=${ASSET_VERSION}`;
+  $("#diagram-panel").classList.toggle("hidden", state.mode !== "wiring");
+  $("#diagram-image").src = diagramLink.href;
+  $("#diagram-panel-link").href = diagramLink.href;
   $(".question-card").classList.toggle("wrong-state", Boolean(state.mistakes[number] && state.answers[number] !== question.answer));
   // questions.json lives in output/, so resolve its image path from the site root.
   $("#question-image").src = `${state.assetBase}/${question.question_image}?v=${ASSET_VERSION}`;
